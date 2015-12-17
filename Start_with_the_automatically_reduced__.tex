@@ -1,0 +1,91 @@
+Start with the automatically reduced photometry. I will use {\tt NAME} as the name of the object, {\tt TARGDATE-TARGDATE} as the range of dates for the science images (images where the target was visible), and {\tt TEMPDATE} as the epoch(s) of the reference images. {\tt ID} refers to the ID number of a specific file. {\tt IN} refers to the instrument prefix (kb for SBIG, fl for Sinistro, fs for Spectral).
+
+\section{Prepare the Reference Images}
+\subsection{LCOGT References}
+\begin{enumerate}
+
+\item Look through your reference images and choose the best one for each camera--filter combination. Make a note of their ID numbers.
+
+{\tt ds9 \& } \\
+{\tt lscloop.py -n NAME -e TEMPDATE -s checkwcs}
+
+\item Mark your chosen images as references.
+
+{\tt lscloop.py -n NAME -e TEMPDATE -d ID -s template}
+
+\item Run cosmic ray rejection on the reference images.
+
+{\tt lscloop.py -n NAME -e TEMPDATE --filetype 4 -s cosmic}
+
+\item Generate PSFs for the reference images. I recommend doing this interactively for each image (using {\tt --show}), since these PSFs will affect all of your subtractions.
+
+{\tt lscloop.py -n NAME -e TEMPDATE --filetype 4 -s psf --show}
+
+\end{enumerate}
+
+\subsection{SDSS References}
+\begin{enumerate}
+
+\item Choose a set of science images that includes one image with each camera/filter combination used. Then run the following command once for each of those images, using the ID numbers to choose individual frames. This will take a while.
+
+{\tt lscloop.py -n NAME -e TARGDATE -d ID -s ingestsloan }
+
+Make a note of the {\tt TEMPDATE} for each SDSS frame you download.
+
+\item Generate PSFs for the SDSS images. I usually get good results using a FWHM of $\sim 5$ pixels for SDSS.
+
+{\tt ds9 \& } \\
+{\tt lscloop.py -n NAME -e TEMPDATE --filetype 4 -s psf --show --fwhm 5 }
+
+\end{enumerate}
+
+\section{Do the Image Subtraction}
+
+\begin{enumerate}
+\item Run cosmic ray rejection on all the science images. This will take a while.
+
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE -s cosmic}
+
+\item In the mean time, check to make sure all the science images have good PSFs from the automatic pipeline.
+
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE -s checkpsf}
+
+Generate a new PSF for any images you marked as bad. I usually get good results using a FWHM of $\sim 7$ pixels, but this depends on the seeing.
+
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE -b psf -s psf --show --fwhm 7}
+
+\item Once all the cosmic ray rejection is done (for science and reference images), run the subtraction. This will take a while.
+
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --tempdate TEMPDATE --normalize t -T IN --fixpix -s diff}
+
+If you want, look over the results. Make sure to choose Frame $>$ Tile on DS9.
+
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -s checkdiff}
+\end{enumerate}
+
+\section{Extract the Photometry}
+\begin{enumerate}
+
+\item First copy the convolved PSFs over.
+
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -s psf}
+
+\item Then calculate the instrumental magnitudes. Use a flat background for subtracted images.
+
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -x 1 -y 1 -c -s psfmag }
+
+If you want, look over the results and redo any bad fits.
+
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -s checkmag}
+
+\item Calculate the zero point and color term for each set of filters.
+
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -f landolt --field apass -s zcat }\\
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -f sloan -s zcat }
+
+\item Calculate the apparent magnitudes for each set of filters.
+
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -f landolt -s mag }\\
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -f sloan -s mag }
+
+\end{enumerate}
