@@ -1,0 +1,1 @@
+Start_with_the_automatically_reduced__.tex
