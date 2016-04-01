@@ -37,6 +37,10 @@ Make a note of the {\tt TEMPDATE} for each SDSS frame you download.
 {\tt ds9 \& } \\
 {\tt lscloop.py -n NAME -e TEMPDATE --filetype 4 -s psf --show --fwhm 5 }
 
+\item Copy the variance images to the right place for use as cosmic ray masks.
+
+{\tt lscloop.py -n NAME -e TEMPDATE --filetype 4 -s cosmic }
+
 \end{enumerate}
 
 \section{Do the Image Subtraction}
