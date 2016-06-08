@@ -60,7 +60,7 @@ Generate a new PSF for any images you marked as bad. I usually get good results 
 
 \item Once all the cosmic ray rejection is done (for science and reference images), run the subtraction. This will take a while.
 
-{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --tempdate TEMPDATE --normalize t -T IN --fixpix -s diff}
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --tempdate TEMPDATE --normalize t -T IN --temptel SDSS --fixpix -s diff}
 
 If you want, look over the results. Make sure to choose Frame $>$ Tile on DS9.
 
