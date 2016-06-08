@@ -1,4 +1,4 @@
-Start with the automatically reduced photometry. I will use {\tt NAME} as the name of the object, {\tt TARGDATE-TARGDATE} as the range of dates for the science images (images where the target was visible), and {\tt TEMPDATE} as the epoch(s) of the reference images. {\tt ID} refers to the ID number of a specific file. {\tt IN} refers to the instrument prefix (kb for SBIG, fl for Sinistro, fs for Spectral).
+Start with the automatically reduced photometry. I will use {\tt NAME} as the name of the object, {\tt TARGDATE-TARGDATE} as the range of dates for the science images (images where the target was visible), and {\tt TEMPDATE} as the epoch(s) of the reference images. {\tt ID} refers to the ID number of a specific file. {\tt IN} refers to the instrument prefix (kb for SBIG, fl for Sinistro, fs for Spectral). {\tt TEMPTEL} is the instrument prefix for the template image (kb, fl, fs, or SDSS). If you don't give this option, it will select the same instrument given with -T.
 
 \section{Prepare the Reference Images}
 \subsection{LCOGT References}
@@ -60,7 +60,7 @@ Generate a new PSF for any images you marked as bad. I usually get good results 
 
 \item Once all the cosmic ray rejection is done (for science and reference images), run the subtraction. This will take a while.
 
-{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --tempdate TEMPDATE --normalize t -T IN --temptel SDSS --fixpix -s diff}
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --tempdate TEMPDATE --normalize t -T IN --temptel TEMPTEL --fixpix -s diff}
 
 If you want, look over the results. Make sure to choose Frame $>$ Tile on DS9.
 
