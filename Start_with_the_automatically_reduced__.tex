@@ -82,14 +82,13 @@ If you want, look over the results and redo any bad fits.
 
 {\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -s checkmag}
 
-\item Calculate the zero point and color term for each set of filters.
+\item Calculate the zero point and color term for each set of filters. (If the field is not in SDSS, use {\tt --field apass} for the Sloan filters too.)
 
 {\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -f landolt --field apass -s zcat }\\
 {\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -f sloan -s zcat }
 
-\item Calculate the apparent magnitudes for each set of filters.
+\item Calculate the apparent magnitudes. Make sure you don't separate the filters if you want to include color corrections.
 
-{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -f landolt -s mag }\\
-{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -f sloan -s mag }
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -s mag }
 
 \end{enumerate}
