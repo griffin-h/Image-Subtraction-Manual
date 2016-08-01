@@ -30,7 +30,7 @@ Start with the automatically reduced photometry. I will use {\tt NAME} as the na
 
 {\tt lscloop.py -n NAME -e TARGDATE -d ID -s ingestsloan }
 
-Make a note of the {\tt TEMPDATE} for each SDSS frame you download. ({\tt TEMPDATE=19990101-20080101} by default.)
+Make a note of the {\tt TEMPDATE} for each SDSS frame you download.
 
 \item Generate PSFs for the SDSS images. I usually get good results using a FWHM of $\sim 5$ pixels for SDSS.
 
@@ -58,7 +58,7 @@ Generate a new PSF for any images you marked as bad. I usually get good results 
 
 {\tt lscloop.py -n NAME -e TARGDATE-TARGDATE -b psf -s psf --show --fwhm 7}
 
-\item Once all the cosmic ray rejection is done (for science and reference images), run the subtraction. This will take a while.
+\item Once all the cosmic ray rejection is done (for science and reference images), run the subtraction. This will take a while. By default, {\tt --tempdate=19990101-20080101} (useful for SDSS), {\tt --temptel=IN}, and {\tt --fixpix=False}.
 
 {\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --normalize t -T IN [--tempdate TEMPDATE] [--temptel TEMPTEL] [--fixpix] -s diff}
 
