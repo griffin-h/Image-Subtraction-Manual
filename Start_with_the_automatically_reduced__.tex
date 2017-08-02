@@ -8,6 +8,8 @@ Start with the automatically reduced photometry. I will use {\tt NAME} as the na
 
 {\tt ds9 \& } \\
 {\tt lscloop.py -n NAME -e TEMPDATE -s checkwcs}
+{\tt If wcs is off by a little bit, rerun the wcs stage with the following command, then run checkwcs:}
+{\tt lscloop.py -n NAME -e TEMPDATE -s wcs --mode astrometry -F}
 
 \item Mark your chosen images as references.
 
