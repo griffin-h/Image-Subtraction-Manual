@@ -7,8 +7,10 @@ Start with the automatically reduced photometry. I will use {\tt NAME} as the na
 \item Look through your reference images and choose the best one for each camera--filter combination. Make a note of their ID numbers.
 
 {\tt ds9 \& } \\
-{\tt lscloop.py -n NAME -e TEMPDATE -s checkwcs} \\
-{\tt If wcs is off by a little bit, rerun the wcs stage with the following command, then run checkwcs:} \\
+{\tt lscloop.py -n NAME -e TEMPDATE -s checkwcs}
+
+If wcs is off by a little bit, rerun the wcs stage with the following command, then run checkwcs:
+
 {\tt lscloop.py -n NAME -e TEMPDATE -s wcs --mode astrometry -F}
 
 \item Mark your chosen images as references.
@@ -59,6 +61,10 @@ Make a note of the {\tt TEMPDATE} for each SDSS frame you download.
 Generate a new PSF for any images you marked as bad. I usually get good results using a FWHM of $\sim 7$ pixels, but this depends on the seeing.
 
 {\tt lscloop.py -n NAME -e TARGDATE-TARGDATE -b psf -s psf --show --fwhm 7}
+
+If the images are saturated, adjust the Dmax value. For my image 85000 was okay, but depends on the gain (saturation is 65535$*$gain):
+
+{\tt \tt lscloop.py -n NAME -e TARGDATE-TARGDATE -b psf -s psf --show --fwhm 7 --datamax 85000}
 
 \item Once all the cosmic ray rejection is done (for science and reference images), run the subtraction. This will take a while. By default, {\tt --tempdate=19990101-20080101} (useful for SDSS), {\tt --temptel=IN}, {\tt --fixpix=False}, and {\tt --difftype=0} (0 = HOTPANTS, 1 = Optimal).
 
