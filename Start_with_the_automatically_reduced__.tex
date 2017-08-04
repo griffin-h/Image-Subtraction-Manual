@@ -62,9 +62,9 @@ Generate a new PSF for any images you marked as bad. I usually get good results 
 
 {\tt lscloop.py -n NAME -e TARGDATE-TARGDATE -b psf -s psf --show --fwhm 7}
 
-If the images are saturated, adjust the Dmax value. For my image 85000 was okay, but depends on the gain (saturation is 65535$*$gain):
+If the images are saturated, adjust the Dmax value. For my images 75000 worked, but depends on the gain (saturation is 65535$*$gain):
 
-{\tt \tt lscloop.py -n NAME -e TARGDATE-TARGDATE -b psf -s psf --show --fwhm 7 --datamax 85000}
+{\tt \tt lscloop.py -n NAME -e TARGDATE-TARGDATE -b psf -s psf --show --fwhm 7 --datamax 75000}
 
 \item Once all the cosmic ray rejection is done (for science and reference images), run the subtraction. This will take a while. By default, {\tt --tempdate=19990101-20080101} (useful for SDSS), {\tt --temptel=IN}, {\tt --fixpix=False}, and {\tt --difftype=0} (0 = HOTPANTS, 1 = Optimal).
 
@@ -86,7 +86,7 @@ By default, {\tt --filetype 3} selects both HOTPANTS and Optimally subtracted im
 
 \item Then calculate the instrumental magnitudes. Use a flat background for subtracted images.
 
-{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -x 1 -y 1 -c -s psfmag }
+{\tt lscloop.py -n NAME -e TARGDATE-TARGDATE --filetype 3 -x 1 -y 1 -s psfmag }
 
 If you want, look over the results and redo any bad fits.
 
